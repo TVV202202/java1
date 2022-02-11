@@ -6,7 +6,7 @@ public class OneLine {
     }
 
     public static String intValue(String variable, int value) {
-        return "Значение variable равно " + value;
+        return "Значение " + variable + " равно " + value;
     }
 
     public static String square(int n) {
@@ -14,7 +14,7 @@ public class OneLine {
     }
 
     public static String sum(int n, int m) {
-        return "Сумма " +n + " и " + m + " равна " + n + m;
+        return "Сумма " + n + " и " + m + " равна " + (n + m);
     }
 
     public static void main(String[] args) {
@@ -23,7 +23,7 @@ public class OneLine {
         System.out.println(intValue("jgfj", 77));
         System.out.println(square(11));
         System.out.println(sum(35, 40));
+        */
 
-         */
     }
 }
