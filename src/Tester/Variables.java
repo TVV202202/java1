@@ -1,5 +1,23 @@
+package Tester;
+
 public class Variables {
+
+    protected static int iii = 12;
+    int i = 0;
+    final static String xs = "String";
+
+
     public static void main (String[] args) {
+        byte b1=123;
+        short s1=32023;
+        int i1=65432;
+        long l1=123456789012345L;
+        float fl=1.22278f;
+        double pi=3.1415926535d;
+        double koe=1.5e7;
+        String message="Вы уверены, что хотите удалить файл?";
+
+
     }
 
     static int sum = 0;

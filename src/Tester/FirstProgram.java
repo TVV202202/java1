@@ -1,3 +1,5 @@
+package Tester;
+
 public class FirstProgram {
     public static void printJava() {
         System.out.println("На Java работает");
