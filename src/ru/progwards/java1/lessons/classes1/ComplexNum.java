@@ -10,12 +10,10 @@ public class ComplexNum {
     }
 
     public String toString() {
-        if (b > 0)
+        if (b >= 0)
             return a + "+" + b + "i";
-        else if (b < 0)
-            return a + "" + b + "i";
         else
-            return Integer.toString(a);
+            return a + "" + b + "i";
     }
 
     public ComplexNum add(ComplexNum num) {
@@ -40,8 +38,8 @@ public class ComplexNum {
     }
 
     public static void main(String[] args) {
-        ComplexNum x = new ComplexNum(7, 4);
-        ComplexNum y = new ComplexNum(4, 6);
+        ComplexNum x = new ComplexNum(1000, 1000);
+        ComplexNum y = new ComplexNum(100, 100);
         System.out.println(x);
         System.out.println(x.add(y));
         System.out.println(x.sub(y));
