@@ -13,15 +13,16 @@ public class Time {
 
     public String toString() {
         String h, m, s;
-        if (hours < 10)
+        final int  tt = 10;
+        if (hours < tt)
             h = "0" + hours;
         else
             h = Integer.toString(hours);
-        if (minutes < 10)
+        if (minutes < tt)
             m = "0" + minutes;
         else
             m = Integer.toString(minutes);
-        if (seconds < 10)
+        if (seconds < tt)
             s = "0" + seconds;
         else
             s = Integer.toString(seconds);
