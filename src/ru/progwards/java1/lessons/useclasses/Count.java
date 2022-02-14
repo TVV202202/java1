@@ -1,4 +1,4 @@
-package ru.progwards.java1.lessons.classes1;
+package ru.progwards.java1.lessons.useclasses;
 
 public class Count {
     int count;
