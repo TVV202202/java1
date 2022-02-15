@@ -33,7 +33,13 @@ abstract class Animal {
         if (this == o) {
             return true;
         }
-        return (o instanceof Animal animal) && (this.name == animal.name) && (this.kind() == animal.kind()) && (this.weight == animal.weight);
+        if (!(o instanceof Animal)) {
+            return false;
+        }
+        Animal animal = (Animal) o;
+        return  (this.name.equals(animal.name))
+                && (this.kind().equals(animal.kind()))
+                && (this.weight == animal.weight);
     }
 
     enum FoodKind{
