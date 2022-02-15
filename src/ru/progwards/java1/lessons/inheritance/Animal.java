@@ -66,7 +66,7 @@ class Duck extends Animal {
 
 class TestAnimal {
     public static void printAnimal(Animal animal) {
-        System.out.println(animal.toString() + " - " + animal.say());
+        System.out.println(animal.toString() + " - " + animal.say()+"!");
     }
 
     public static void main(String[] args) {
