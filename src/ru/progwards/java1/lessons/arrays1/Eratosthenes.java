@@ -8,6 +8,7 @@ public class Eratosthenes {
         for (int i = 0; i <= N; i++) {
             sieve[i] = true;
         }
+        sift();
     }
 
     private void sift() {
@@ -22,12 +23,15 @@ public class Eratosthenes {
     }
 
     public boolean isSimple(int n) {
-        sift();
         return sieve[n];
     }
 
     public static void main(String[] args) {
         Eratosthenes erat = new Eratosthenes(100);
-        System.out.println(erat.isSimple(1));
+        int n = 1;
+        if (n>0 && n<=100)
+            System.out.println(erat.isSimple(1));
+        else
+            System.out.println("n вне диапазона");
     }
 }

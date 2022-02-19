@@ -1,6 +1,6 @@
 package ru.progwards.java1.lessons.inheritance;
 
-public abstract class Animal {
+abstract class Animal {
     String name;
 
     public Animal(String name) {

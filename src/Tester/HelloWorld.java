@@ -10,34 +10,51 @@ public class HelloWorld {
         //System.out.println(toDouble("24.55"));
         //System.out.println(maxInt());
         //System.out.println(toInt("345"));
-        /*
-        double k=26.941684955104225;
-        double pp = pp = k * 3/ 2.0;
-        double res1 = Math.sqrt(pp * (pp - k) * (pp - k) * (pp - k));
-        double res2 = Math.sqrt(pp * Math.pow((pp - k) ,3));
-        System.out.println(res1-res2);
-         */
-        long a=5;
-        int b=18537754;
-        int c=1;
-        System.out.println(factorial(a));
-        System.out.println(2);
+        //int[][] m = {{1,2,3}, {10,20,30}, {11,12,13}};
+        int[][] m = {{}};
+        int i = m.length;
+        //System.out.println(m[0][1]);
+        int sum = arraySum2(m, 0);
+        //int[] a = {1,4,5,7,2,4,5,66,78,0,11,5};
+        //arrayPrint(a);
+        System.out.println(sum);
     }
-    static long factorial(long n){
+    public static int arraySum2(int[][] m, int n){
+        int res = 0;
+        for(int i=0; i<m[n].length; i++){
+            res += m[n][i];
+        }
+        return res;
+    }
+    public static void arrayPrint(int[] a) {
+        System.out.println(a[3] + " " + a[5] + " " + a[8]);
+    }
+    public static int arraysSum(int[] a){
+        int res = 0;
+        for (int value: a){
+            res +=value;
+        }
+        return res;
+    }
+    public static boolean compare3str(String str1, String str2, String str3) {
+        return str1.equals(str2) && str1.equals(str3);
+    }
+
+    static long factorial(long n) {
         int i;
         long res;
-        if (n==0)
+        if (n == 0)
             return 1;
         else {
             res = 1;
-            for (i = 1; i <= n; i++){
-                res *=i;
+            for (i = 1; i <= n; i++) {
+                res *= i;
             }
         }
         return res;
     }
 
-    static String textGrade(int grade){
+    static String textGrade(int grade) {
         String res = "";
         if (grade < 0 || grade > 100)
             res = "не определено";
@@ -59,17 +76,44 @@ public class HelloWorld {
     }
 
 
-
-    static int addAsStrings(int n1, int n2){
+    static int addAsStrings(int n1, int n2) {
         return Integer.parseInt(Integer.toString(n1) + Integer.toString(n2));
     }
-    public static double toDouble(String str){
+
+    public static double toDouble(String str) {
         return Double.parseDouble(str);
     }
-    public static int maxInt(){
+
+    public static int maxInt() {
         return Integer.MAX_VALUE;
     }
-    public static int toInt(String str){
+
+    public static int toInt(String str) {
         return Integer.parseInt(str);
+    }
+}
+
+class Guns {
+    String model;
+    double caliber;
+
+    public Guns(String model, double caliber) {
+        this.model = model;
+        this.caliber = caliber;
+    }
+
+    int compareTo(Guns gun) {
+        return Double.compare(caliber, gun.caliber);
+    }
+
+    public static void sortGuns(Guns gun1, Guns gun2) {
+        if (gun1.compareTo(gun2) < 0)
+            System.out.println(gun1.model + ", " + gun2.model);
+        else
+            System.out.println(gun2.model + ", " + gun1.model);
+    }
+
+    public static void main(String[] args) {
+        sortGuns(new Guns("colt", 7.62), new Guns("para", 6.65));
     }
 }
