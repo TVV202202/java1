@@ -6,34 +6,42 @@ public class DIntArray {
     private int[] nums;
 
     public DIntArray() {
-        nums = new int[0];
+        //nums = new int[0];
     }
 
     public void add(int num) {
-        int[] numsNew = new int[nums.length + 1];
-        if (nums.length == 0)
+        if (nums == null) {
+            int[] numsNew = new int[1];
             numsNew[0] = num;
+            nums = numsNew;
+        }
         else {
+            int[] numsNew = new int[nums.length + 1];
             System.arraycopy(nums, 0, numsNew, 0, nums.length);
             numsNew[nums.length] = num;
+            nums = numsNew;
         }
-        nums = numsNew;
-
     }
 
     public void atInsert(int pos, int num) {
-        int[] numsNew = new int[nums.length + 1];
-        if (nums.length == 0)
+        if (nums == null) {
+            int[] numsNew = new int[1];
             numsNew[0] = num;
+            nums = numsNew;
+        }
         else if (nums.length - 1 < pos) {
+            int[] numsNew = new int[nums.length + 1];
             System.arraycopy(nums, 0, numsNew, 0, nums.length);
             numsNew[nums.length] = num;
+            nums = numsNew;
         } else {
+            int[] numsNew = new int[nums.length + 1];
             System.arraycopy(nums, 0, numsNew, 0, pos);
             numsNew[pos] = num;
             System.arraycopy(nums, pos, numsNew, pos + 1, nums.length - pos);
+            nums = numsNew;
         }
-        nums = numsNew;
+
     }
 
     public void atDelete(int pos) {
