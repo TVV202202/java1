@@ -3,9 +3,9 @@ package ru.progwards.java1.lessons.arrays2;
 import java.util.Arrays;
 
 public class IntArrays {
-    public static String ArraystoString(int[] a) {
+    public static String toString(int[] a) {
         if (a.length == 0)
-            return "[]";
+            return "";
         String res = "[";
         for (int i = 0; i < a.length - 1; i++) {
             res += a[i] + ", ";
@@ -48,8 +48,8 @@ public class IntArrays {
     }
 
     public static void main(String[] args) {
-        int[] a = {1};
-        //System.out.println(ArraystoString(a));
+        int[] a = {1,2};
+        System.out.println(toString(a));
         int[] a1 = {1, 2, 3, 1, 4, 7, 6};
         int[] a2 = {3, 2, 1, 5, 7, 4, 1};
         System.out.println(equals1(a1, a2));
