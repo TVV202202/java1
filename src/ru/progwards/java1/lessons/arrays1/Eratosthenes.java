@@ -25,6 +25,21 @@ public class Eratosthenes {
     public boolean isSimple(int n) {
         return sieve[n];
     }
+    static String arrayToString(int []a){
+        return Arrays.toString(a);
+    }
+    static String sortAndToString(int []a){
+        Arrays.sort(a);
+        return Arrays.toString(a);
+    }
+    public static int maxPlusMin(int[] a){
+        if (a.length==0)
+            return 0;
+        else if (a.length==1)
+            return a[0];
+        Arrays.sort(a);
+        return a[0] + a[a.length-1];
+    }
 
     public static void main(String[] args) {
         Eratosthenes erat = new Eratosthenes(100);
@@ -33,5 +48,10 @@ public class Eratosthenes {
             System.out.println(erat.isSimple(n));
         else
             System.out.println("n вне диапазона");
+
+        int[] a = {12, 5, 0, 58, 36};
+
+        System.out.println(maxPlusMin(a));
+
     }
 }
