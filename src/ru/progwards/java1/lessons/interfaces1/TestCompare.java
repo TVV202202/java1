@@ -12,7 +12,7 @@ public class TestCompare {
         animals[4] = new Hamster("Акакий", 0.25);
         animals[5] = new Hamster("Поликарп", 0.32);
         //System.out.println(animals[0].compareTo(animals[1]));
-        Arrays.sort(animals);
+        //Arrays.sort(animals);
         System.out.println(Arrays.toString(animals));
     }
 }
