@@ -17,10 +17,10 @@ public abstract class Animal implements Comparable<Animal>, IColor{
 
     public abstract String say();
 
-
     public String toString() {
         return "Это " + kind() + " " + this.name + " " + this.weight + " " + getColor();
     }
+
     @Override
     public int compareTo(Animal o){
         return Double.compare(this.weight, o.weight);
