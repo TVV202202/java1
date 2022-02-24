@@ -1,5 +1,7 @@
 package ru.progwards.java1.lessons.interfaces2;
 
+import static ru.progwards.java1.lessons.interfaces2.ArraySort.sort;
+
 public class Car implements CompareWeight {
     private double weight;
 
@@ -25,18 +27,7 @@ public class Car implements CompareWeight {
         return "Это автомобиль грузоподъемностью " + weight;
     }
 
-    public static void sort(CompareWeight[] a) {
-        CompareWeight tmp;
-        for (int i = 0; i < a.length; i++) {
-            for (int j = i + 1; j < a.length; j++) {
-                if (a[i].getWeight() > a[j].getWeight()) {
-                    tmp = a[i];
-                    a[i] = a[j];
-                    a[j] = tmp;
-                }
-            }
-        }
-    }
+
 
     public static void main(String[] args) {
         Car car1 = new Car(500);
