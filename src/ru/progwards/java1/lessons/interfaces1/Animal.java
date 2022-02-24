@@ -1,6 +1,6 @@
 package ru.progwards.java1.lessons.interfaces1;
 
-public class Animal implements Comparable<Animal>, IColor{
+public abstract class Animal implements Comparable<Animal>, IColor{
     String name;
     double weight;
 
@@ -13,18 +13,10 @@ public class Animal implements Comparable<Animal>, IColor{
         this.weight = weight;
     }
 
-    public String kind(){
-        return "";
-    }
+    public abstract String kind();
+    public abstract String say();
 
-    public String say(){
-        return "";
-    }
-
-    @Override
-    public Color getColor() {
-        return null;
-    }
+    public abstract Color getColor();
 
     public String toString() {
         return "Это " + kind() + " " + this.name + " " + this.weight + " " + getColor();
