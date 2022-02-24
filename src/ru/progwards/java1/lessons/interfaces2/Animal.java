@@ -52,5 +52,6 @@ public abstract class Animal implements Comparable<Animal>, IColor, Home, ToStri
     public double getWeight() {
         return weight;
     }
+
 }
 
