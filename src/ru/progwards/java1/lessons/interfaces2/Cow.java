@@ -1,7 +1,5 @@
 package ru.progwards.java1.lessons.interfaces2;
 
-import ru.progwards.java1.lessons.interfaces1.Color;
-
 public class Cow extends Animal {
     public Cow(String name) {
         super(name);
