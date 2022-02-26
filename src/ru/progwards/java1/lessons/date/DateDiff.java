@@ -11,22 +11,22 @@ public class DateDiff {
     public static long secBetween(long time){  return (time / 1000) % 60;}
     public static long minBetween(long time){  return (time / 1000 / 60) % 60; }
     public static long hourBetween(long time){  return (time / 1000 / 60 / 60) % 24; }
-    public static long yearBetween(long time){  return time / 1000 / 60 / 60 / 24 / 365; }
-    public static long monthBetween(long time){  return ((time / 1000 / 60 / 60 / 24) - yearBetween(time) * 365) / 30; }
+    public static long yearBetween(Date date){  return date.getYear() - 70; }
+    public static long monthBetween(Date date){  return date.getMonth(); }
     public static long dayBetween(long time){
-        return ((time / 1000 / 60 / 60 / 24) - yearBetween(time) * 360) % 30;
+        return ((time / 1000 / 60 / 60 / 24) % 365 % 30);
     }
 
     public static void timeBetween(Date date1, Date date2){
         long time = Math.abs(date2.getTime()-date1.getTime());
-
         Date d0 = new Date(time);
+        //System.out.println(d0);
         long sec = d0.getSeconds();
         long min = d0.getMinutes();
         long hour = d0.getHours();
-        long day = date1.getDay()-date2.getDay();
-        long month = date2.getMonth()-date1.getMonth();
-        long year = date2.getYear()-date1.getYear();
+        long day = d0.getDay();
+        long month = d0.getMonth();
+        long year = d0.getYear() - 70;
         /*
         System.out.println(sec);
         System.out.println(secBetween(time));
@@ -37,14 +37,14 @@ public class DateDiff {
         System.out.println(day);
         System.out.println(dayBetween(time));
         System.out.println(month);
-        System.out.println(monthBetween(time));
+        System.out.println(monthBetween(d0));
         System.out.println(year);
-        System.out.println(yearBetween(time));
+        System.out.println(yearBetween(d0));
 
          */
 
         System.out.print("Между " + date1 + " и " + date2 + " ");
-        System.out.print(yearBetween(time) + " лет, " + monthBetween(time) +" месяцев, ");
+        System.out.print(yearBetween(d0) + " лет, " + monthBetween(d0) +" месяцев, ");
         System.out.print(dayBetween(time) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
 
@@ -53,19 +53,20 @@ public class DateDiff {
 
     public static void timeToBirthday(Date now, Date birthday){
         long time = Math.abs(birthday.getTime()-now.getTime());
-
+        Date d0 = new Date(time);
         System.out.print("До дня рождения ");
-        System.out.print(monthBetween(time) +" месяцев, ");
+        System.out.print(monthBetween(d0) +" месяцев, ");
         System.out.print(dayBetween(time) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }
     public static void averageTime(Date[] events){
         long time = 0;
-        for (int i=0; i< events.length; i++)
-            time += events[i].getTime();
-        time /= events.length;
+        for (int i=0; i< events.length-1; i++)
+            time += Math.abs(events[i].getTime() - events[i+1].getTime());
+        time /= (events.length-1);
+        Date d0 = new Date(time);
         System.out.print("Среднее время между событиями ");
-        System.out.print(yearBetween(time) + " лет, " + monthBetween(time) +" месяцев, ");
+        System.out.print(yearBetween(d0) + " лет, " + monthBetween(d0) +" месяцев, ");
         System.out.print(dayBetween(time) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }

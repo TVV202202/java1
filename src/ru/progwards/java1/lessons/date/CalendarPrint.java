@@ -15,7 +15,7 @@ public class CalendarPrint {
         int monthNow = calendar.get(Calendar.MONTH); // запоминаем текущий месяц (пригодится в цикле)
 
         System.out.println(year + " " + monthYear[month-1]);
-        System.out.println("пн вт ср чт пт сб вс");
+        System.out.println("ПН ВТ СР ЧТ ПТ СБ ВС");
 
         int n = calendar.get(Calendar.DAY_OF_WEEK)-1; // какой день недели начиная с пн
         int k=0; // кол-во напечатанных дат
