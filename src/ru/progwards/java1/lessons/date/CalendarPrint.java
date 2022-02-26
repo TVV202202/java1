@@ -10,11 +10,11 @@ public class CalendarPrint {
     public static void printMonth(int month, int year){
         String[] monthYear = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь" ," Ноябрь", "Декабрь"};
         //String[] dayWeek = {"пн", " вт", " ср", " чт", " пт", " сб", " вс"};
-        Calendar calendar = new GregorianCalendar(year, month,1);
+        Calendar calendar = new GregorianCalendar(year, month-1,1);
 
         int monthNow = calendar.get(Calendar.MONTH); // запоминаем текущий месяц (пригодится в цикле)
 
-        System.out.println(year + " " + monthYear[month]);
+        System.out.println(year + " " + monthYear[month-1]);
         System.out.println("пн вт ср чт пт сб вс");
 
         int n = calendar.get(Calendar.DAY_OF_WEEK)-1; // какой день недели начиная с пн
@@ -42,6 +42,6 @@ public class CalendarPrint {
     }
 
     public static void main(String[] args) {
-        printMonth(Calendar.FEBRUARY, 2022);
+        printMonth(7, 2018);
     }
 }

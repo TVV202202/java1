@@ -1,5 +1,6 @@
 package Tester;
 
+import java.util.Date;
 import java.util.function.DoubleBinaryOperator;
 
 public class HelloWorld {
@@ -11,13 +12,18 @@ public class HelloWorld {
         //System.out.println(maxInt());
         //System.out.println(toInt("345"));
         //int[][] m = {{1,2,3}, {10,20,30}, {11,12,13}};
-        int[][] m = {{}};
-        int i = m.length;
+        //int[][] m = {{}};
+        //int i = m.length;
         //System.out.println(m[0][1]);
-        int sum = arraySum2(m, 0);
+        //int sum = arraySum2(m, 0);
         //int[] a = {1,4,5,7,2,4,5,66,78,0,11,5};
         //arrayPrint(a);
-        System.out.println(sum);
+        Date d1 = new Date();
+        Date d2 = new Date();
+        System.out.println(timeDiff(d1,d2));
+    }
+    public static long timeDiff(Date date1, Date date2){
+        return date1.getTime()-date2.getTime();
     }
     public static int arraySum2(int[][] m, int n){
         int res = 0;
