@@ -43,7 +43,7 @@ public class DateDiff {
 
          */
 
-        System.out.print("Между " + date1 + " и " + date2 + " ");
+        System.out.print("Между date1 и date2 ");
         System.out.print(yearBetween(d0) + " лет, " + monthBetween(d0) +" месяцев, ");
         System.out.print(dayBetween(time) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
