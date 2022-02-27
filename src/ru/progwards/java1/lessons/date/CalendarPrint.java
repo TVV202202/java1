@@ -42,6 +42,6 @@ public class CalendarPrint {
     }
 
     public static void main(String[] args) {
-        printMonth(7, 2018);
+        printMonth(2, 2022);
     }
 }
