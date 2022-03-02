@@ -1,6 +1,7 @@
 package ru.progwards.java1.lessons.date;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.chrono.IsoChronology;
@@ -41,43 +42,46 @@ public class DateDiff {
     public static void timeBetween(Date date1, Date date2){
         LocalDate lD1;
         LocalDate lD2;
-        long time = Math.abs(date1.getTime()-date2.getTime());
+
+        long time;
         if (date2.getTime() > date1.getTime()) {
-            lD2 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            lD1 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }
-        else {
             lD1 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             lD2 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            time = date2.getTime()-date1.getTime();
+        }
+        else {
+            lD2 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD1 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            time = date1.getTime()-date2.getTime();
         }
 
         Date d0 = new Date(time);
-        //System.out.println(Period.ofMonths(2));
-
 
         System.out.print("Между date1 и  date2 ");
         System.out.print(yearBetween2(lD1, lD2) + " лет, " + monthBetween2(lD1, lD2) +" месяцев, ");
         System.out.print(dayBetween2(lD1, lD2) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
-
-
     }
 
     public static void timeToBirthday(Date now, Date birthday){
+        LocalDate lD1;
+        LocalDate lD2;
+        long time;
         if (birthday.getMonth() > now.getMonth()){
-            LocalDate lD2 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate lD1 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD1 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD2 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            time = birthday.getTime()-now.getTime();
         }
         else{
-            LocalDate lD1 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate lD2 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD2 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD1 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            time = now.getTime()-birthday.getTime();
         }
-        long time = Math.abs(birthday.getTime()-now.getTime());
         Date d0 = new Date(time);
 
 
         System.out.print("До дня рождения ");
-        System.out.print(monthBetween(d0) +" месяцев, ");
+        System.out.print(monthBetween2(lD1, lD2) +" месяцев, ");
         System.out.print(dayBetween(d0) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }
@@ -113,7 +117,7 @@ public class DateDiff {
         Date d4 = new Date(1660165200000l);
 
 
-        //System.out.println(d4);
+        System.out.println(d4);
         //timeBetween(d1, d2);
         timeToBirthday(d3, d4);
 
