@@ -1,51 +1,57 @@
 package ru.progwards.java1.lessons.date;
 
+import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
+import java.time.chrono.IsoChronology;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateDiff {
-
+    static final int[] MONTH= {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     public static long msecBetween(long time){  return time % 1000;}
     public static long secBetween(long time){  return (time / 1000) % 60;}
     public static long minBetween(long time){  return (time / 1000 / 60) % 60; }
     public static long hourBetween(long time){  return (time / 1000 / 60 / 60) % 24; }
     public static long yearBetween(Date date){  return date.getYear() - 70; }
     public static long monthBetween(Date date){  return date.getMonth(); }
-    public static long dayBetween(long time){
-        return ((time / 1000 / 60 / 60 / 24) % 365 % 30);
+    public static long dayBetween(Date date){
+        long time = date.getTime();
+        long k = yearBetween(date) / 4; // кол-во високосных
+        long n = yearBetween(date) * 365 + k;
+        return ((time / 1000 / 60 / 60 / 24) - n) % 30;
+    }
+    public static long dayBetween2(LocalDate date1, LocalDate date2){
+        return Period.between(date1, date2).getDays();
+    }
+    public static long yearBetween2(LocalDate date1, LocalDate date2){
+        return Period.between(date1, date2).getYears();
+    }
+    public static long monthBetween2(LocalDate date1, LocalDate date2){
+        return Period.between(date1, date2).getMonths();
     }
 
+    public static boolean yearVysok(Date date) { //проверка года на високосность
+        int year = date.getYear() + 1900;
+        return year % 4 == 0 && year % 100 != 0 && year % 400 == 0;
+    }
+
+
     public static void timeBetween(Date date1, Date date2){
-        long time = Math.abs(date2.getTime()-date1.getTime());
+        long time = time = date1.getTime()-date2.getTime();
+        if (date2.getTime() > date1.getTime())
+            time = date2.getTime()-date1.getTime();
+
+        LocalDate lD1 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate lD2 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date d0 = new Date(time);
-        //System.out.println(d0);
-        long sec = d0.getSeconds();
-        long min = d0.getMinutes();
-        long hour = d0.getHours();
-        long day = d0.getDay();
-        long month = d0.getMonth();
-        long year = d0.getYear() - 70;
-        /*
-        System.out.println(sec);
-        System.out.println(secBetween(time));
-        System.out.println(min);
-        System.out.println(minBetween(time));
-        System.out.println(hour);
-        System.out.println(hourBetween(time));
-        System.out.println(day);
-        System.out.println(dayBetween(time));
-        System.out.println(month);
-        System.out.println(monthBetween(d0));
-        System.out.println(year);
-        System.out.println(yearBetween(d0));
+        //System.out.println(Period.ofMonths(2));
 
-         */
 
-        System.out.print("Между date1 и date2 ");
-        System.out.print(yearBetween(d0) + " лет, " + monthBetween(d0) +" месяцев, ");
-        System.out.print(dayBetween(time) + " дней, " + hourBetween(time) + " часов, ");
+        System.out.print("Между date1 и  date2 ");
+        System.out.print(yearBetween2(lD1, lD2) + " лет, " + monthBetween2(lD1, lD2) +" месяцев, ");
+        System.out.print(dayBetween2(lD1, lD2) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
 
 
@@ -54,20 +60,36 @@ public class DateDiff {
     public static void timeToBirthday(Date now, Date birthday){
         long time = Math.abs(birthday.getTime()-now.getTime());
         Date d0 = new Date(time);
+        LocalDate lD1 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate lD2 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
         System.out.print("До дня рождения ");
         System.out.print(monthBetween(d0) +" месяцев, ");
-        System.out.print(dayBetween(time) + " дней, " + hourBetween(time) + " часов, ");
+        System.out.print(dayBetween(d0) + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }
     public static void averageTime(Date[] events){
         long time = 0;
-        for (int i=0; i< events.length-1; i++)
-            time += Math.abs(events[i].getTime() - events[i+1].getTime());
+        long years = 0;
+        long months = 0;
+        long days = 0;
+        for (int i=0; i< events.length-1; i++) {
+            LocalDate lD1 = events[i].toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate lD2 = events[i + 1].toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            years += yearBetween2(lD1, lD2);
+            months += monthBetween2(lD1,lD2);
+            days += dayBetween2(lD1, lD2);
+            time += Math.abs(events[i].getTime() - events[i + 1].getTime());
+        }
+        years /= (events.length-1);
+        months /= (events.length-1);
+        days /= (events.length-1);
         time /= (events.length-1);
+
         Date d0 = new Date(time);
         System.out.print("Среднее время между событиями ");
-        System.out.print(yearBetween(d0) + " лет, " + monthBetween(d0) +" месяцев, ");
-        System.out.print(dayBetween(time) + " дней, " + hourBetween(time) + " часов, ");
+        System.out.print(years + " лет, " + months +" месяцев, ");
+        System.out.print(days + " дней, " + hourBetween(time) + " часов, ");
         System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }
 
@@ -80,7 +102,7 @@ public class DateDiff {
 
         //System.out.println(d4);
         //timeBetween(d1, d2);
-        //timeToBirthday(d3, d4);
+        timeToBirthday(d3, d4);
 
         Calendar calendar = new GregorianCalendar(2007,1,3,11,33,43);
         Date d11 = calendar.getTime();
