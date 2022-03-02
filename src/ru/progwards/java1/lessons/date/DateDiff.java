@@ -39,12 +39,18 @@ public class DateDiff {
 
 
     public static void timeBetween(Date date1, Date date2){
-        long time = time = date1.getTime()-date2.getTime();
-        if (date2.getTime() > date1.getTime())
-            time = date2.getTime()-date1.getTime();
+        LocalDate lD1;
+        LocalDate lD2;
+        long time = Math.abs(date1.getTime()-date2.getTime());
+        if (date2.getTime() > date1.getTime()) {
+            lD2 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD1 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        else {
+            lD1 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD2 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
 
-        LocalDate lD1 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate lD2 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date d0 = new Date(time);
         //System.out.println(Period.ofMonths(2));
 
@@ -58,10 +64,17 @@ public class DateDiff {
     }
 
     public static void timeToBirthday(Date now, Date birthday){
+        if (birthday.getMonth() > now.getMonth()){
+            LocalDate lD2 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate lD1 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+        else{
+            LocalDate lD1 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate lD2 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
         long time = Math.abs(birthday.getTime()-now.getTime());
         Date d0 = new Date(time);
-        LocalDate lD1 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate lD2 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
 
         System.out.print("До дня рождения ");
         System.out.print(monthBetween(d0) +" месяцев, ");
