@@ -16,7 +16,7 @@ public class FloatNumber {
         if (chars[0] != '-'){ // положительное число
             this.sign = true;
             int dot = num.indexOf(".");
-            int ex = num.indexOf("e");
+            int ex = num.indexOf("E");
             if (ex!=-1) { //есть степень e
                 exp = Integer.parseInt(num.substring(ex + 1));
                 if (dot != -1) { // есть точка
@@ -45,7 +45,7 @@ public class FloatNumber {
         else{ // отрицательное число
             this.sign = false;
             int dot = num.indexOf(".");
-            int ex = num.indexOf("e");
+            int ex = num.indexOf("E");
             if (ex!=-1) { //есть степень e
                 exp = Integer.parseInt(num.substring(ex + 1));
                 if (dot != -1) { // есть точка
@@ -87,13 +87,13 @@ public class FloatNumber {
             if (exp == 0)
                 return mantStr;
             else
-                return mantStr + "e" + exp;
+                return mantStr + "E" + exp;
         }
         else{
             if (exp == 0)
                 return "-" + mantStr;
             else
-                return "-" + mantStr + "e" + exp;
+                return "-" + mantStr + "E" + exp;
         }
     }
 
@@ -120,9 +120,10 @@ public class FloatNumber {
     public static void main(String[] args) {
         FloatNumber fn1 = new FloatNumber(true, 3,0);
         FloatNumber fn2 = new FloatNumber(false, 367,2);
-        FloatNumber fn3 = new FloatNumber("3678");
+        FloatNumber fn3 = new FloatNumber("361146E2");
         System.out.println(fn1 + " fn1");
-        //System.out.println(fn2 + " fn2");
+        System.out.println(fn3.toString());
+        System.out.println(fn2 + " fn2");
         System.out.println(fn3 + " fn3");
         System.out.println(fn3.toDouble());
         //fn2.negative();

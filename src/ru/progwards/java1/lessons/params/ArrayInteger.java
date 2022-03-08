@@ -48,7 +48,11 @@ public class ArrayInteger {
         else{
             byte k = 0;
             for (int i=0; i < digits.length; i++){
-                byte tmp = (byte) (digits[i] + num.digits[i] + k);
+                byte tmp = 0;
+                if (i< num.digits.length)
+                    tmp = (byte) (digits[i] + num.digits[i] + k);
+                else
+                    tmp = (byte) (digits[i] + k);
                 if (tmp < 10){
                     digits[i] = tmp;
                     k = 0;
@@ -69,8 +73,8 @@ public class ArrayInteger {
     }
 
     public static void main(String[] args) {
-        ArrayInteger num = new ArrayInteger(159);
-        System.out.println(Arrays.toString(num.digits));
+        ArrayInteger num = new ArrayInteger(234);
+        System.out.println(num.toString());
         ArrayInteger num2 = new ArrayInteger();
         num2.fromString("12345");
         System.out.println(Arrays.toString(num2.digits));
@@ -79,5 +83,7 @@ public class ArrayInteger {
         System.out.println(num3);
         num.add(num3);
         System.out.println(num);
+
+
     }
 }
