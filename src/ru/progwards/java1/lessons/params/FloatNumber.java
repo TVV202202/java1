@@ -13,7 +13,7 @@ public class FloatNumber {
         this.exp = chars.length - exp-1;
 
          */
-        this.exp = exp;
+        this.exp = exp-1;
     }
 
     public FloatNumber(String num){
@@ -26,10 +26,10 @@ public class FloatNumber {
                 exp = Integer.parseInt(num.substring(ex + 1));
                 if (dot != -1) { // есть точка
                     String tmp = num.substring(0, dot);
-                    mantissa = Integer.parseInt(tmp + num.substring(dot + 1, ex) );
+                    mantissa = Long.parseLong(tmp + num.substring(dot + 1, ex) );
                 }
                 else{ // есть е и нет точки
-                    mantissa = Integer.parseInt(num.substring(0, ex));
+                    mantissa = Long.parseLong(num.substring(0, ex));
                 }
             }
             else { // нет е
@@ -39,11 +39,11 @@ public class FloatNumber {
                     else
                         exp =  dot-1; // длина строки минус 1 цифра и точка
                     String tmp = num.substring(0, dot);
-                    mantissa = Integer.parseInt(tmp + num.substring(dot + 1));
+                    mantissa = Long.parseLong(tmp + num.substring(dot + 1));
                 }
                 else { // нет е и нет точки
                     exp = chars.length-1;
-                    mantissa = Integer.parseInt(num);
+                    mantissa = Long.parseLong(num);
                 }
             }
         }
@@ -55,10 +55,10 @@ public class FloatNumber {
                 exp = Integer.parseInt(num.substring(ex + 1));
                 if (dot != -1) { // есть точка
                     String tmp = num.substring(1, dot);
-                    mantissa = Integer.parseInt(tmp + num.substring(dot + 1, ex) );
+                    mantissa = Long.parseLong(tmp + num.substring(dot + 1, ex) );
                 }
                 else{ // есть е и нет точки
-                    mantissa = Integer.parseInt(num.substring(1, ex));
+                    mantissa = Long.parseLong(num.substring(1, ex));
                 }
             }
             else { // нет е
@@ -68,11 +68,11 @@ public class FloatNumber {
                     else
                         exp = dot - 2 ; // точка минус знак
                     String tmp = num.substring(1, dot);
-                    mantissa = Integer.parseInt(tmp + num.substring(dot + 1));
+                    mantissa = Long.parseLong(tmp + num.substring(dot + 1));
                 }
                 else { // нет е и нет точки
                     exp = chars.length-2;
-                    mantissa = Integer.parseInt(num.substring(1));
+                    mantissa = Long.parseLong(num.substring(1));
                 }
             }
         }
@@ -127,11 +127,11 @@ public class FloatNumber {
     }
 
     public static void main(String[] args) {
-        FloatNumber fn1 = new FloatNumber(true, 55474, 2);
+        FloatNumber fn1 = new FloatNumber(true, 681856, 3);
         FloatNumber fn2 = new FloatNumber(false, 489341, 3);
         FloatNumber fn3 = new FloatNumber("2.32113E2");
         System.out.println(fn1 + " fn1");
-        //System.out.println(fn1.toDouble());
+        System.out.println(fn1.toDouble());
         System.out.println(fn1.toString());
         //System.out.println(fn2 + " fn2");
         //System.out.println(fn2.toDouble());
@@ -142,7 +142,7 @@ public class FloatNumber {
         //System.out.println(fn1.add(fn3));
         //System.out.println(fn1.sub(fn3));
         FloatNumber fn4 = new FloatNumber("0");
-        fn4.fromDouble(-694.691);
+        fn4.fromDouble(Double.parseDouble("1324252919129"));
         System.out.println(fn4.toDouble());
         FloatNumber fn5 = new FloatNumber("-694.691");
         System.out.println(fn5);

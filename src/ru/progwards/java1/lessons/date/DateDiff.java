@@ -60,7 +60,7 @@ public class DateDiff {
         System.out.print("Между date1 и  date2 ");
         System.out.print(yearBetween2(lD1, lD2) + " лет, " + monthBetween2(lD1, lD2) +" месяцев, ");
         System.out.print(dayBetween2(lD1, lD2) + " дней, " + hourBetween(time) + " часов, ");
-        System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
+        System.out.println(minBetween(time) + " минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }
 
     public static void timeToBirthday(Date now, Date birthday){
@@ -73,8 +73,8 @@ public class DateDiff {
             time = birthday.getTime()-now.getTime();
         }
         else{
-            lD2 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             lD1 = birthday.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            lD2 = now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             time = now.getTime()-birthday.getTime();
         }
         Date d0 = new Date(time);
@@ -83,7 +83,7 @@ public class DateDiff {
         System.out.print("До дня рождения ");
         System.out.print(monthBetween2(lD1, lD2) +" месяцев, ");
         System.out.print(dayBetween(d0) + " дней, " + hourBetween(time) + " часов, ");
-        System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
+        System.out.println(minBetween(time) + " минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }
     public static void averageTime(Date[] events){
         long time = 0;
@@ -107,7 +107,7 @@ public class DateDiff {
         System.out.print("Среднее время между событиями ");
         System.out.print(years + " лет, " + months +" месяцев, ");
         System.out.print(days + " дней, " + hourBetween(time) + " часов, ");
-        System.out.println(minBetween(time) + "минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
+        System.out.println(minBetween(time) + " минут, " + secBetween(time) + " секунд, " + msecBetween(time) + " миллисекунд");
     }
 
     public static void main(String[] args) {
