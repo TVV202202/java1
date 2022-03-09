@@ -2,26 +2,27 @@ package ru.progwards.java1.lessons.params;
 
 public abstract class AbsInteger {
     int num;
-    public AbsInteger (int num){
+
+    public AbsInteger(int num) {
         this.num = num;
     }
+
     public abstract String toString();
 
-    public int toAbsInteger(){
+    public int toAbsInteger() {
         return Integer.parseInt(this.toString());
     }
 
-    public static AbsInteger add(AbsInteger num1, AbsInteger num2){
+    public static AbsInteger add(AbsInteger num1, AbsInteger num2) {
         int n1 = num1.toAbsInteger();
         int n2 = num2.toAbsInteger();
         int n3 = n1 + n2;
-        if (n3 >= -128 & n3 <= 127){
+        if (n3 >= -128 & n3 <= 127) {
             return new ByteInteger((byte) n3);
         }
-        if (n3 >= -32768 & n3 <= 32767){
+        if (n3 >= -32768 & n3 <= 32767) {
             return new ShortInteger((short) n3);
-        }
-        else
+        } else
             return new IntInteger(n3);
     }
 
