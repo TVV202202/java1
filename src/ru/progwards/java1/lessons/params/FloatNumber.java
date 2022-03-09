@@ -8,6 +8,11 @@ public class FloatNumber {
     public FloatNumber(boolean sing, long mantissa, int exp){
         this.sign = sing;
         this.mantissa = mantissa;
+        /*String tmp = Long.toString(mantissa);
+        char[] chars = tmp.toCharArray();
+        this.exp = chars.length - exp-1;
+
+         */
         this.exp = exp;
     }
 
@@ -32,7 +37,7 @@ public class FloatNumber {
                     if (chars[0] == '0')
                         exp = - 1 ; // сдвиг точки вправо
                     else
-                        exp =  dot - 1; // длина строки минус 1 цифра и точка
+                        exp =  dot; // длина строки минус 1 цифра и точка
                     String tmp = num.substring(0, dot);
                     mantissa = Integer.parseInt(tmp + num.substring(dot + 1));
                 }
@@ -61,7 +66,7 @@ public class FloatNumber {
                     if (chars[1] == '0')
                         exp = - 1 ; // сдвиг точки вправо
                     else
-                        exp = dot - 2 ; // длина строки минус знак, 1 цифра и точка
+                        exp = dot - 1 ; // точка минус знак
                     String tmp = num.substring(1, dot);
                     mantissa = Integer.parseInt(tmp + num.substring(dot + 1));
                 }
@@ -83,17 +88,18 @@ public class FloatNumber {
     public String toString() {
         String tmp = Long.toString(mantissa);
         String mantStr = tmp.charAt(0) + "." + tmp.substring(1);
+        char[] chars = tmp.toCharArray();
         if (sign){
             if (exp == 0)
                 return mantStr;
             else
-                return mantStr + "E" + exp;
+                return mantStr + "E" + (chars.length - exp - 1);
         }
         else{
             if (exp == 0)
                 return "-" + mantStr;
             else
-                return "-" + mantStr + "E" + exp;
+                return "-" + mantStr + "E" + (chars.length - exp - 1);
         }
     }
 
@@ -101,8 +107,11 @@ public class FloatNumber {
         return Double.parseDouble(this.toString());
     }
 
-    static public void fromDouble(double num){
+    public void fromDouble(double num){
         FloatNumber fn = new FloatNumber(Double.toString(num));
+        sign = fn.sign;
+        mantissa = fn.mantissa;
+        exp = fn.exp;
     }
 
     public void negative(){
@@ -118,18 +127,24 @@ public class FloatNumber {
     }
 
     public static void main(String[] args) {
-        FloatNumber fn1 = new FloatNumber(true, 3,0);
-        FloatNumber fn2 = new FloatNumber(false, 367,2);
-        FloatNumber fn3 = new FloatNumber("361146E2");
-        System.out.println(fn1 + " fn1");
-        System.out.println(fn3.toString());
-        System.out.println(fn2 + " fn2");
+        FloatNumber fn1 = new FloatNumber(true, 55474, 2);
+        FloatNumber fn2 = new FloatNumber(false, 489341, 3);
+        FloatNumber fn3 = new FloatNumber("-361146E2");
+        //System.out.println(fn1 + " fn1");
+        //System.out.println(fn1.toDouble());
+       // System.out.println(fn1.toString());
+        //System.out.println(fn2 + " fn2");
+        //System.out.println(fn2.toDouble());
         System.out.println(fn3 + " fn3");
         System.out.println(fn3.toDouble());
         //fn2.negative();
         //System.out.println(fn2 + " fn2");
         //System.out.println(fn1.add(fn3));
-        System.out.println(fn1.sub(fn3));
+        //System.out.println(fn1.sub(fn3));
+        FloatNumber fn4 = new FloatNumber("0");
+        fn4.fromDouble(-694.691);
+        System.out.println(fn4.toDouble());
+        System.out.println(new FloatNumber("-694.691"));
 
     }
 }
