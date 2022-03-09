@@ -121,33 +121,39 @@ public class FloatNumber {
     }
 
     public FloatNumber add(FloatNumber num){
-        return new FloatNumber(Double.toString(this.toDouble() + num.toDouble()));
+        int precision = Math.max(exp, num.exp);
+        double scale = Math.pow(10, precision+1);
+        double tmp = Math.round((this.toDouble() + num.toDouble()) * scale) / scale;
+        return new FloatNumber(Double.toString(tmp));
     }
     public FloatNumber sub(FloatNumber num){
         num.negative();
-        return new FloatNumber(Double.toString(this.toDouble() + num.toDouble()));
+        return add(num);
     }
 
     public static void main(String[] args) {
-        FloatNumber fn1 = new FloatNumber(true, 656244942818l, 3);
-        FloatNumber fn2 = new FloatNumber(true, 489341, 3);
+        FloatNumber fn1 = new FloatNumber(true, 63872, 3);
+        FloatNumber fn2 = new FloatNumber(true, 279634, 3);
         FloatNumber fn3 = new FloatNumber("-361146E2");
         System.out.println(fn1 + " fn1");
         System.out.println(fn1.toDouble());
-        System.out.println(fn1.toString());
+        //System.out.println(fn1.toString());
         System.out.println(fn2 + " fn2");
         System.out.println(fn2.toDouble());
-        System.out.println(fn3 + " fn3");
-        System.out.println(fn3.toDouble());
+        //System.out.println(fn3 + " fn3");
+        //System.out.println(fn3.toDouble());
         //fn2.negative();
         //System.out.println(fn2 + " fn2");
-        //System.out.println(fn1.add(fn3));
-        //System.out.println(fn1.sub(fn3));
-        FloatNumber fn4 = new FloatNumber("0");
-        fn4.fromDouble(Double.parseDouble("1324252919129"));
-        System.out.println(fn4.toDouble());
-        FloatNumber fn5 = new FloatNumber("1324252919129");
-        System.out.println(fn5);
+        //FloatNumber fn5 = fn1.add(fn2);
+        //System.out.println(fn5);
+        //System.out.println(fn5.toDouble());
+        System.out.println(fn1.sub(fn2).toDouble());
+
+        //FloatNumber fn4 = new FloatNumber("0");
+        //fn4.fromDouble(Double.parseDouble("1324252919129"));
+        //System.out.println(fn4.toDouble());
+        //FloatNumber fn5 = new FloatNumber("1324252919129");
+        //System.out.println(fn5);
 
     }
 }
