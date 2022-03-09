@@ -8,10 +8,9 @@ public class FloatNumber {
     public FloatNumber(boolean sing, long mantissa, int exp){
         this.sign = sing;
         String tmp = Long.toString(mantissa);
-        if (tmp.charAt(tmp.length() - 1) == '0')
-            this.mantissa = mantissa / 10;
-        else
-            this.mantissa =mantissa;
+        while (mantissa % 10 == 0)
+            mantissa /= 10;
+        this.mantissa =mantissa;
         char[] chars = tmp.toCharArray();
         this.exp = chars.length - exp - 1;
 
@@ -138,7 +137,7 @@ public class FloatNumber {
     }
 
     public static void main(String[] args) {
-        FloatNumber fn1 = new FloatNumber(true, 2013207149860l, 3);
+        FloatNumber fn1 = new FloatNumber(true, 201320714986000l, 3);
         FloatNumber fn2 = new FloatNumber(true, 1887692982805l, 3);
         FloatNumber fn3 = new FloatNumber("-361146E2");
         System.out.println(fn1 + " fn1");
