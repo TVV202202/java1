@@ -76,7 +76,7 @@ public class ArrayInteger {
         ArrayInteger num = new ArrayInteger(234);
         System.out.println(num.toString());
         ArrayInteger num2 = new ArrayInteger();
-        num2.fromString("12345");
+        num2.fromString("10");
         System.out.println(Arrays.toString(num2.digits));
         System.out.println(num);
         ArrayInteger num3 = new ArrayInteger(911);

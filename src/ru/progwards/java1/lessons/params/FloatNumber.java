@@ -37,7 +37,7 @@ public class FloatNumber {
                     if (chars[0] == '0')
                         exp = - 1 ; // сдвиг точки вправо
                     else
-                        exp =  dot; // длина строки минус 1 цифра и точка
+                        exp =  dot-1; // длина строки минус 1 цифра и точка
                     String tmp = num.substring(0, dot);
                     mantissa = Integer.parseInt(tmp + num.substring(dot + 1));
                 }
@@ -66,7 +66,7 @@ public class FloatNumber {
                     if (chars[1] == '0')
                         exp = - 1 ; // сдвиг точки вправо
                     else
-                        exp = dot - 1 ; // точка минус знак
+                        exp = dot - 2 ; // точка минус знак
                     String tmp = num.substring(1, dot);
                     mantissa = Integer.parseInt(tmp + num.substring(dot + 1));
                 }
@@ -93,13 +93,13 @@ public class FloatNumber {
             if (exp == 0)
                 return mantStr;
             else
-                return mantStr + "E" + (chars.length - exp - 1);
+                return mantStr + "E" +  exp;
         }
         else{
             if (exp == 0)
                 return "-" + mantStr;
             else
-                return "-" + mantStr + "E" + (chars.length - exp - 1);
+                return "-" + mantStr + "E" + exp;
         }
     }
 
@@ -129,10 +129,10 @@ public class FloatNumber {
     public static void main(String[] args) {
         FloatNumber fn1 = new FloatNumber(true, 55474, 2);
         FloatNumber fn2 = new FloatNumber(false, 489341, 3);
-        FloatNumber fn3 = new FloatNumber("-361146E2");
-        //System.out.println(fn1 + " fn1");
+        FloatNumber fn3 = new FloatNumber("2.32113E2");
+        System.out.println(fn1 + " fn1");
         //System.out.println(fn1.toDouble());
-       // System.out.println(fn1.toString());
+        System.out.println(fn1.toString());
         //System.out.println(fn2 + " fn2");
         //System.out.println(fn2.toDouble());
         System.out.println(fn3 + " fn3");
@@ -144,7 +144,8 @@ public class FloatNumber {
         FloatNumber fn4 = new FloatNumber("0");
         fn4.fromDouble(-694.691);
         System.out.println(fn4.toDouble());
-        System.out.println(new FloatNumber("-694.691"));
+        FloatNumber fn5 = new FloatNumber("-694.691");
+        System.out.println(fn5);
 
     }
 }
