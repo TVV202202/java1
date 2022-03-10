@@ -55,11 +55,14 @@ public class DateDiff {
         return year % 4 == 0 && year % 100 != 0 && year % 400 == 0;
     }
      */
-    public static int[] inTime(Date date1, Date date2) {
+    public static int[] inTime(Date date1, Date date2, int sdvig) {
         Calendar cD1 = Calendar.getInstance();
         cD1.setTime(date1);
         Calendar cD2 = Calendar.getInstance();
         cD2.setTime(date2);
+        if (sdvig == 1)
+            cD2.set(1, cD1.get(Calendar.YEAR)+1);
+        //System.out.println(cD2.get(Calendar.YEAR));
         int[] timeDiff = new int[7];
         int multi = 1;
         if ((cD2.get(Calendar.YEAR) < cD1.get(Calendar.YEAR))) {
@@ -116,8 +119,9 @@ public class DateDiff {
         Date d0 = new Date(time);
 
  */
-        int[] timeDiff = inTime(date1, date2);
-        System.out.print("Между date1 и  date2 ");
+        int sdvig = 0;
+        int[] timeDiff = inTime(date1, date2, sdvig);
+        System.out.print("Между date1 и date2 ");
         System.out.print(timeDiff[0] + " лет, " + timeDiff[1] + " месяцев, ");
         System.out.print(timeDiff[2] + " дней, " + timeDiff[3] + " часов, ");
         System.out.println(timeDiff[4] + " минут, " + timeDiff[5] + " секунд, " + timeDiff[6] + " миллисекунд");
@@ -140,7 +144,10 @@ public class DateDiff {
 
          */
 
-        int[] timeDiff = inTime(now, birthday);
+        int sdvig = 0;
+        if (now.getMonth()-birthday.getMonth() > 0)
+            sdvig = 1;
+        int[] timeDiff = inTime(now, birthday, sdvig);
         System.out.print("До дня рождения ");
         System.out.print(timeDiff[1] + " месяцев, ");
         System.out.print(timeDiff[2] + " дней, " + timeDiff[3] + " часов, ");
@@ -150,15 +157,19 @@ public class DateDiff {
     public static void averageTime(Date[] events) {
         long years = 0, months = 0, days = 0;
         long hours = 0, mins=0, sec = 0, msec = 0;
+        int sdvig=0;
         for (int i = 0; i < events.length - 1; i++) {
-            int[] timeDiff = inTime(events[i], events[i + 1]);
-            years += timeDiff[0];
-            months += timeDiff[1];
-            days += timeDiff[2];
-            hours +=timeDiff[3];
-            mins += timeDiff[4];
-            sec += timeDiff[5];
-            msec += timeDiff[6];
+            int multi = 1;
+            //if (events[i].getTime()>events[i + 1].getTime())
+            //    multi = -1;
+            int[] timeDiff = inTime(events[i], events[i + 1],sdvig);
+            years += timeDiff[0] * multi;
+            months += timeDiff[1] * multi;
+            days += timeDiff[2] * multi;
+            hours +=timeDiff[3] * multi;
+            mins += timeDiff[4] * multi;
+            sec += timeDiff[5] * multi;
+            msec += timeDiff[6] * multi;
             //LocalDate lD2 = events[i + 1].toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             //time += Math.abs(events[i].getTime() - events[i + 1].getTime());
         }
@@ -183,11 +194,11 @@ public class DateDiff {
         Date d3 = new Date();
         Date d4 = new Date(1660165200000l);
         Date[] ev = {d1, d2, d3, d4};
-        averageTime(ev);
 
         System.out.println(d4);
         //timeBetween(d1, d2);
         timeToBirthday(d3, d4);
+        averageTime(ev);
 
         Calendar calendar = new GregorianCalendar(2007, 1, 3, 11, 33, 43);
         Date d11 = calendar.getTime();
@@ -197,7 +208,7 @@ public class DateDiff {
         Date d21 = calendar1.getTime();
         Date d211 = new Date(d21.getTime() + 228);
         //System.out.println(d211.getTime());
-        timeBetween(d111, d211);
+        timeBetween(d211, d111);
         System.out.println(d111);
         System.out.println(d211);
     }
