@@ -8,9 +8,8 @@ import java.util.GregorianCalendar;
 public class CalendarPrint {
 
     public static void printMonth(int month, int year){
-        String[] monthYear = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь" ," Ноябрь", "Декабрь"};
-        //String[] dayWeek = {"пн", " вт", " ср", " чт", " пт", " сб", " вс"};
-        Calendar calendar = new GregorianCalendar(year, month-1,1);
+        String[] monthYear = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь" ,"Ноябрь", "Декабрь"};
+        Calendar calendar = new GregorianCalendar(year, month - 1,1);
 
         int monthNow = calendar.get(Calendar.MONTH); // запоминаем текущий месяц (пригодится в цикле)
 
@@ -42,6 +41,6 @@ public class CalendarPrint {
     }
 
     public static void main(String[] args) {
-        printMonth(2, 2022);
+        printMonth(12, 1999);
     }
 }
