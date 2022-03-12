@@ -1,6 +1,9 @@
 package Tester;
 
+
+
 import java.util.Date;
+import java.util.TimeZone;
 import java.util.function.DoubleBinaryOperator;
 
 public class HelloWorld {
@@ -24,6 +27,11 @@ public class HelloWorld {
     }
     public static long timeDiff(Date date1, Date date2){
         return date1.getTime()-date2.getTime();
+    }
+    public int diffWithMoscow(String strtz){
+        TimeZone tM = TimeZone.getTimeZone("Europe/Moscow");
+        TimeZone tS = TimeZone.getTimeZone(strtz);
+        return tM.getOffset(System.currentTimeMillis())-tS.getOffset(System.currentTimeMillis());
     }
     public static int arraySum2(int[][] m, int n){
         int res = 0;

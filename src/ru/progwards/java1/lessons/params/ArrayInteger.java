@@ -53,22 +53,17 @@ public class ArrayInteger {
         } else {
             byte k = 0;
             for (int i = 0; i < digits.length; i++) {
-                byte tmp = 0;
-                if (i < num.digits.length)
-                    tmp = (byte) (digits[i] + num.digits[i] + k);
-                else
-                    tmp = (byte) (digits[i] + k);
-                if (tmp < 10) {
-                    digits[i] = tmp;
-                    k = 0;
-                } else {
+                digits[i] = (byte) (digits[i] + num.digits[i] + k);
+                if (digits[i] > 9) {
                     if (i != digits.length - 1) {
-                        digits[i] = (byte) (tmp % 10);
+                        digits[i] -= 10;
                         k = 1;
                     } else {
                         digits = new byte[]{0};
                         return false;
                     }
+                } else {
+                    k = 0;
                 }
             }
         }
@@ -82,7 +77,7 @@ public class ArrayInteger {
         System.out.println(Arrays.toString(num.digits));
         System.out.println(num);
         ArrayInteger num3 = new ArrayInteger(4);
-        num3.fromString("151");
+        num3.fromString("90");
         System.out.println(num3);
         num.add(num3);
         System.out.println(num);

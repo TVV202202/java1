@@ -17,12 +17,13 @@ public abstract class AbsInteger {
         int n1 = num1.toAbsInteger();
         int n2 = num2.toAbsInteger();
         int n3 = n1 + n2;
-        if (n3 >= -128 & n3 <= 127) {
+        if (n3 >= Byte.MIN_VALUE && n3 <= Byte.MAX_VALUE) {
             return new ByteInteger((byte) n3);
         }
-        if (n3 >= -32768 & n3 <= 32767) {
+        else if (n3>= Short.MIN_VALUE && n3 <= Short.MAX_VALUE) {
             return new ShortInteger((short) n3);
-        } else
+        }
+        else
             return new IntInteger(n3);
     }
 
