@@ -1,11 +1,5 @@
 package ru.progwards.java1.lessons.date;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.chrono.IsoChronology;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -46,27 +40,31 @@ public class DateDiff {
         timeDiff[0] += (date2.get(Calendar.YEAR) - date1.get(Calendar.YEAR)) ; // year
 
     }
-    public static int[] inTime(Date date1, Date date2, int sdvig) {
+    public static int[] inTime(Date date1, Date date2, int shift) {
         Calendar cD1 = Calendar.getInstance();
         cD1.setTime(date1);
         Calendar cD2 = Calendar.getInstance();
         cD2.setTime(date2);
-        if (sdvig == 1)
-            cD2.set(Calendar.YEAR, cD1.get(Calendar.YEAR) + 1);
-
+        if (shift == 1) { // вызов для дня рождения
+            cD2.set(Calendar.YEAR, cD1.get(Calendar.YEAR));
+            if (cD2.getTimeInMillis() > cD1.getTimeInMillis()){
+                cD2.set(Calendar.YEAR, cD1.get(Calendar.YEAR) + 1);
+            }
+        }
         int[] timeDiff = new int[7]; // массив с данными по разнице дат, начиная с года и до мс
-        if (date2.getTime() > date1.getTime()) { // смотрим какая дата больше для корректного вычитания
+        if (cD2.getTimeInMillis() > cD1.getTimeInMillis()) { // смотрим какая дата больше для корректного вычитания
             diffDate(timeDiff, cD1, cD2 ); // заполнение массива
         }
         else{
             diffDate(timeDiff, cD2, cD1 );
         }
+
         return timeDiff;
     }
 
     public static void timeBetween(Date date1, Date date2) {
-        int sdvig = 0; // здесь сдвиг не нужен
-        int[] timeDiff = inTime(date1, date2, sdvig);
+        int shift = 0; // здесь сдвиг не нужен
+        int[] timeDiff = inTime(date1, date2, shift);
         System.out.print("Между date1 и date2 ");
         System.out.print(timeDiff[0] + " лет, " + timeDiff[1] + " месяцев, ");
         System.out.print(timeDiff[2] + " дней, " + timeDiff[3] + " часов, ");
@@ -74,10 +72,10 @@ public class DateDiff {
     }
 
     public static void timeToBirthday(Date now, Date birthday) {
-        int sdvig = 0; // сдвиг для корректного вычисления месяцев, что из чего вычитать
-        if (now.getMonth() - birthday.getMonth() > 0)
-            sdvig = 1;
-        int[] timeDiff = inTime(now, birthday, sdvig);
+        int[] timeDiff;
+        int shift = 1; // сдвиг для корректного вычисления месяцев, что из чего вычитать
+
+        timeDiff = inTime(now, birthday, shift);
         System.out.print("До дня рождения ");
         System.out.print(timeDiff[1] + " месяцев, ");
         System.out.print(timeDiff[2] + " дней, " + timeDiff[3] + " часов, ");
@@ -85,35 +83,22 @@ public class DateDiff {
     }
 
     public static void averageTime(Date[] events) {
-        long years = 0, months = 0, days = 0;
-        long hours = 0, mins = 0, sec = 0, msec = 0;
-        int sdvig = 0;
-        for (int i = 0; i < events.length - 1; i++) {
-            int multi = 1; // для корректного расчета разницы между датами, даты могут идти и по убыванию и в перемешку
-            if (events[i].getTime()>events[i + 1].getTime())
-                multi = -1;
-            int[] timeDiff = inTime(events[i], events[i + 1], sdvig);
-            years += timeDiff[0] * multi;
-            months += timeDiff[1] * multi;
-            days += timeDiff[2] * multi;
-            hours += timeDiff[3] * multi;
-            mins += timeDiff[4] * multi;
-            sec += timeDiff[5] * multi;
-            msec += timeDiff[6] * multi;
+        int shift = 0;
+        int[] timeDiff = inTime(events[0], events[events.length - 1], 0);
+        int[] timeConst = {0, 12, 30, 24, 60, 60, 1000};
 
+        int k = 0;
+        for (int i =0; i < timeDiff.length; i++ ){
+            int tmp = (timeDiff[i] + k * timeConst[i]) / (events.length - 1);
+            k = (timeDiff[i] + k * timeConst[i]) % (events.length - 1);
+            timeDiff[i] = tmp;
         }
-        years /= (events.length - 1);
-        months /= (events.length - 1);
-        days /= (events.length - 1);
-        hours /= (events.length - 1);
-        mins /= (events.length - 1);
-        sec /= (events.length - 1);
-        msec /= (events.length - 1);
 
         System.out.print("Среднее время между событиями ");
-        System.out.print(years + " лет, " + months + " месяцев, ");
-        System.out.print(days + " дней, " + hours + " часов, ");
-        System.out.println(mins + " минут, " + sec + " секунд, " + msec + " миллисекунд");
+        System.out.print(timeDiff[0] + " лет, " + timeDiff[1] + " месяцев, ");
+        System.out.print(timeDiff[2] + " дней, " + timeDiff[3] + " часов, ");
+        System.out.println(timeDiff[4] + " минут, " + timeDiff[5] + " секунд, " + timeDiff[6] + " миллисекунд");
+
     }
 
     public static void main(String[] args) {
@@ -142,37 +127,40 @@ public class DateDiff {
         Date d8 = new Date(d_.getTime() + 692);
 
         Date[] ev = {d5, d6, d7, d8};
+        /*
         for (int i = 0; i < 3; i++) {
             System.out.println(ev[i]);
             System.out.println(ev[i + 1]);
             timeBetween(ev[i], ev[i + 1]);
         }
+         */
         averageTime(ev);
-        /*
-        //10 марта 2022 года, 03:30:12.665
-        cd1 = new GregorianCalendar(2022, 2, 10, 3, 30, 12);
+
+        //23 октября 1985 года, 06:46:31.362
+        cd1 = new GregorianCalendar(1985, Calendar.OCTOBER, 23, 6, 46, 31);
         d_ = cd1.getTime();
-        Date d9 = new Date(d_.getTime()+665);
-        //12 января 1974 года, 03:24:18.616
-        cd1 = new GregorianCalendar(1974, 0, 12, 3, 24, 18);
+        Date d9 = new Date(d_.getTime()+362);
+        //12 марта 2022 года, 13:24:12.110
+        cd1 = new GregorianCalendar(2022, Calendar.MARCH, 12, 13, 24, 12);
         d_ = cd1.getTime();
-        Date d10 = new Date(d_.getTime()+616);
+        Date d10 = new Date(d_.getTime()+110);
 
         System.out.println(d9);
         System.out.println(d10);
         timeToBirthday(d9, d10);
-         */
 
-        Calendar calendar = new GregorianCalendar(2007, 1, 3, 11, 33, 43);
+        // 25 декабря 2031 года, 02:50:55.942
+        Calendar calendar = new GregorianCalendar(2031, Calendar.DECEMBER, 25, 2, 50, 55);
         Date d11 = calendar.getTime();
-        Date d111 = new Date(d11.getTime() + 806);
-        //System.out.println(d111.getTime());
-        Calendar calendar1 = new GregorianCalendar(2019, 2, 12, 9, 5, 55);
-        Date d21 = calendar1.getTime();
-        Date d211 = new Date(d21.getTime() + 228);
-        //System.out.println(d211.getTime());
-        //timeBetween(d211, d111);
+        Date d111 = new Date(d11.getTime() + 942);
         //System.out.println(d111);
+        //23 июня 2003 года, 05:36:09.901
+        Calendar calendar1 = new GregorianCalendar(2003, Calendar.JUNE, 23, 5, 36, 9);
+        Date d21 = calendar1.getTime();
+        Date d211 = new Date(d21.getTime() + 901);
         //System.out.println(d211);
+
+        //timeBetween(d211, d111);
+
     }
 }
