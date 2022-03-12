@@ -54,53 +54,18 @@ public class DateDiff {
         if (sdvig == 1)
             cD2.set(Calendar.YEAR, cD1.get(Calendar.YEAR) + 1);
 
-        int[] timeDiff = new int[7];
-        int multi = 1;
-        if (date2.getTime() > date1.getTime()) {
-            diffDate(timeDiff, cD1, cD2 );
+        int[] timeDiff = new int[7]; // массив с данными по разнице дат, начиная с года и до мс
+        if (date2.getTime() > date1.getTime()) { // смотрим какая дата больше для корректного вычитания
+            diffDate(timeDiff, cD1, cD2 ); // заполнение массива
         }
         else{
             diffDate(timeDiff, cD2, cD1 );
         }
-        /*
-        timeDiff[6] = (cD2.get(Calendar.MILLISECOND) - cD1.get(Calendar.MILLISECOND)) * multi; // ms
-        if (timeDiff[6] < 0) {
-            timeDiff[6] += 1000;
-            timeDiff[5] = -1;
-        }
-        timeDiff[5] += (cD2.get(Calendar.SECOND) - cD1.get(Calendar.SECOND)) * multi; // sec
-        if (timeDiff[5] < 0) {
-            timeDiff[5] += 60;
-            timeDiff[4] = -1;
-        }
-        timeDiff[4] += (cD2.get(Calendar.MINUTE) - cD1.get(Calendar.MINUTE)) * multi; // min
-        if (timeDiff[4] < 0) {
-            timeDiff[4] += 60;
-            timeDiff[3] = -1;
-        }
-        timeDiff[3] += (cD2.get(Calendar.HOUR_OF_DAY) - cD1.get(Calendar.HOUR_OF_DAY)) * multi; // hour
-        if (timeDiff[3] < 0) {
-            timeDiff[3] += 24;
-            timeDiff[2] = -1;
-        }
-        timeDiff[2] += (cD2.get(Calendar.DATE) - cD1.get(Calendar.DATE)) * multi; // day
-        if (timeDiff[2] < 0) {
-            timeDiff[2] += 30;
-            timeDiff[1] = -1;
-        }
-        timeDiff[1] += (cD2.get(Calendar.MONTH) - cD1.get(Calendar.MONTH)) * multi; // month
-        if (timeDiff[1] < 0) {
-            timeDiff[1] += 12;
-            timeDiff[0] = -1;
-        }
-        timeDiff[0] += (cD2.get(Calendar.YEAR) - cD1.get(Calendar.YEAR)) * multi; // year
-
-         */
         return timeDiff;
     }
 
     public static void timeBetween(Date date1, Date date2) {
-        int sdvig = 0;
+        int sdvig = 0; // здесь сдвиг не нужен
         int[] timeDiff = inTime(date1, date2, sdvig);
         System.out.print("Между date1 и date2 ");
         System.out.print(timeDiff[0] + " лет, " + timeDiff[1] + " месяцев, ");
@@ -109,7 +74,7 @@ public class DateDiff {
     }
 
     public static void timeToBirthday(Date now, Date birthday) {
-        int sdvig = 0;
+        int sdvig = 0; // сдвиг для корректного вычисления месяцев, что из чего вычитать
         if (now.getMonth() - birthday.getMonth() > 0)
             sdvig = 1;
         int[] timeDiff = inTime(now, birthday, sdvig);
@@ -124,9 +89,9 @@ public class DateDiff {
         long hours = 0, mins = 0, sec = 0, msec = 0;
         int sdvig = 0;
         for (int i = 0; i < events.length - 1; i++) {
-            int multi = 1;
-            //if (events[i].getTime()>events[i + 1].getTime())
-            //    multi = -1;
+            int multi = 1; // для корректного расчета разницы между датами, даты могут идти и по убыванию и в перемешку
+            if (events[i].getTime()>events[i + 1].getTime())
+                multi = -1;
             int[] timeDiff = inTime(events[i], events[i + 1], sdvig);
             years += timeDiff[0] * multi;
             months += timeDiff[1] * multi;
