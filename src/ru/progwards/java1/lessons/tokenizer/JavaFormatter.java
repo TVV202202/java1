@@ -80,7 +80,7 @@ public class JavaFormatter {
     }
 
     private static String tab(int count) { // нужное количество отступов (табуляций)
-        return "\t".repeat(Math.max(0, count));
+        return "    ".repeat(Math.max(0, count));
     }
 
     private static String handlingBracket(String str, boolean operator) { // если метод, то true, если оператор, то false
