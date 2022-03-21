@@ -144,7 +144,13 @@ public class JavaFormatter {
                 case '+', '-', '/', '*', '=', '<', '>', '!', '%' -> {
                     if (j + 1 < chArr.length) {
                         switch (chArr[j + 1]) {
-                            case '+', '-', '=' -> {
+                            case '+', '-' -> {
+                                String tmp = chArr[j] + String.valueOf(chArr[j + 1]);
+                                str = str.replace(" " + tmp, tmp);
+                                str = str.replace(tmp + " ", tmp);
+                                j++;
+                            }
+                            case '=' -> {
                                 String tmp = chArr[j] + String.valueOf(chArr[j + 1]);
                                 str = str.replace(tmp, " " + tmp + " ");
                                 j++;
@@ -154,6 +160,11 @@ public class JavaFormatter {
                         str = str.replace("  ", " ");
                     }
                 }
+                case ',' -> {
+                    str = str.replace(" ,", ", ");
+                    str = str.replace(",", ", ");
+                    str = str.replace("  ", " ");
+                }
                 default -> {
                 }
             }
@@ -162,17 +173,29 @@ public class JavaFormatter {
     }
 
     public static void main(String[] args) {
-        String code = "public static void main(String [] args)\n" +
-                "   {\n" +
-                "     int num = 1234, reversed = 0;\n" +
-                "  System.out.println(\"Original Number: \" + num);\n" +
-                "    while(num != 0)\n" +
-                " {\n" +
-                "        int digit = num%10;\n" +
-                "        reversed=reversed*10+    digit ;\n" +
-                "        num /= 10;\n" +
-                "    }\n" +
-                "    System.out.println(\"Reversed Number: \" + reversed);}";
+        String code = "public static void main(String  []  args) {\n" +
+                "    int row=2 , column=   3;\n" +
+                "    int [ ] [ ] matrix = { { 2,3,4 } , { 5,6,4 } };\n" +
+                "\n" +
+                "    display ( matrix );\n" +
+                "\n" +
+                "    int [ ] [ ] transpose = new int [ column ] [ row ] ;\n" +
+                "        for(int i=0; i < row; i++) {\n" +
+                "            for ( int j = 0; j<column; j ++) {\n" +
+                "                transpose [ j ] [ i ] = matrix [ i ] [ j ] ;}\n" +
+                "     }\n" +
+                "\n" +
+                "  display(transpose);\n" +
+                "}\n" +
+                "\n" +
+                "public static void display(int[][] matrix) {\n" +
+                "    System.out.println( \"The matrix is: \" ) ;\n" +
+                "  for(int [ ] row : matrix)\n" +
+                "  {\n" +
+                "     for (int column : row) {\n" +
+                "            System.out.print( column + \"    \") ;\n" +
+                "        }\n" +
+                "     System.out.println ();    }}";
         String code1 = format(code);
         System.out.println(code1);
 
