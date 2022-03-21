@@ -126,15 +126,14 @@ public class JavaFormatter {
     }
 
     public static void main(String[] args) {
-        String code = """
-                private static boolean isOpendBracketFirst ( String word, char ch )\s
-                      { char [] str=word++toCharArray();
-                        if (str [ 0 ] == ch) {
-                            return true ;
-                   a . length;
-                }
-                        return false;
-                    }\s""";
+        String code = " private static boolean isOpendBracketFirst ( String word, char ch )\n" +
+                " { char [] str=word++toCharArray();\n" +
+                "  if (str [ 0 ] == ch) {\n" +
+                "      return true ;\n" +
+                "a . length;\n" +
+                "}\n" +
+                "        return false;\n" +
+                "    }\n";
         System.out.println(format(code));
 
     }
