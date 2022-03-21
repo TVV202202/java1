@@ -8,15 +8,16 @@ public class JavaFormatter {
     public static String format(String code) {
         StringBuilder result = new StringBuilder();
         int countBrace = 0; // счетчик фигурных скобок
-        boolean operator = true;
+        boolean operator = false;
         String[] strings = code.split("\n"); // разбиение текста на строки
+
         for (int i = 0; i < strings.length; i++) {
             String str = strings[i].trim();
             String[] words = str.split(" "); // разбиение строки на слова
             switch (words[0]) {
-                case "for", "while", "if", "else", "switch", "case" -> operator = false;
+                case "for", "while", "if", "else", "switch", "case" -> operator = true;
                 case "}" -> countBrace--;
-                default -> operator = true;
+                default -> operator = false;
             }
             // обработка метода
             // если открывающая круглая скобка  -> склеиваем с предыдущим и со следующим
@@ -32,6 +33,7 @@ public class JavaFormatter {
             // можно слить в один (циклов будет в 3 раза меньше), но надо ли...
             str = handlingBracket(str, operator);
             str = handlingSquareBracket(str);
+            str = handlingBrace(str);
             str = handlingSign(str);
 
             str = str.replace(" ;", ";");
@@ -41,19 +43,35 @@ public class JavaFormatter {
             if (str.startsWith("{")) {
                 strings[i - 1] = strings[i - 1] + " {";
                 countBrace++;
-                str = str.replace("{ ", "");
+                str = str.replace("{", "`");
 
             }
-            strings[i] = tab(countBrace) + str;
+
+            if (str.endsWith("}") && str.trim().length() > 1) { // если строка кончается на } и в ней есть что-то еще...
+                str = str.trim();
+                int countBraceInStr = 0;
+                while (str.endsWith("}") && str.length() > 1) {
+                    countBraceInStr++;
+                    str = str.substring(0, str.length() - 1).trim();
+                }
+                for (int j = 0; j < countBraceInStr; j++) {
+                    str = str + "\n" + tab(countBrace - j - 1) + "}";
+                }
+                strings[i] = tab(countBrace) + str;
+                countBrace = countBrace - countBraceInStr;
+            } else {
+                strings[i] = tab(countBrace) + str;
+            }
 
             if (str.endsWith("{")) { // увеличиваем счетчик отступов
                 countBrace++;
             }
+
         }
         for (String str : strings) {
             if (result.toString().equals("")) {
                 result = new StringBuilder(str);
-            } else {
+            } else if (!str.trim().equals("`")) {
                 result.append("\n").append(str);
             }
         }
@@ -73,7 +91,7 @@ public class JavaFormatter {
                     str = str.replace(chArr[j] + " ", String.valueOf(chArr[j])); // всегда убираем пробел после (
                     str = str.replace(String.valueOf(chArr[j]), " " + chArr[j]); // добавляем пробел спереди для операторов
                     str = str.replace("  ", " "); // убираем двойные пробелы
-                    if (operator) { // если метод, то убираем пробелы спереди
+                    if (!operator) { // если метод, то убираем пробелы спереди
                         str = str.replace(" " + chArr[j], String.valueOf(chArr[j]));
                     }
                 }
@@ -101,11 +119,29 @@ public class JavaFormatter {
         return str;
     }
 
+    private static String handlingBrace(String str) {
+        char[] chArr = str.toCharArray(); // разбиение строки на символы
+        for (int j = 0; j < chArr.length; j++) {
+            switch (chArr[j]) {
+                case '{', '}' -> {
+                    if (j != chArr.length - 1) {
+                        str = str.replace(chArr[j] + " ", String.valueOf(chArr[j])); //  убираем пробел после {
+                        str = str.replace(" " + chArr[j], String.valueOf(chArr[j])); //  убираем пробел перед {
+                    }
+
+                }
+                default -> {
+                }
+            }
+        }
+        return str;
+    }
+
     private static String handlingSign(String str) {
         char[] chArr = str.toCharArray(); // разбиение строки на символы
         for (int j = 0; j < chArr.length; j++) {
             switch (chArr[j]) {
-                case '+', '-', '/', '*', '=', '<', '>', '!' -> {
+                case '+', '-', '/', '*', '=', '<', '>', '!', '%' -> {
                     if (j + 1 < chArr.length) {
                         switch (chArr[j + 1]) {
                             case '+', '-', '=' -> {
@@ -126,15 +162,19 @@ public class JavaFormatter {
     }
 
     public static void main(String[] args) {
-        String code = " private static boolean isOpendBracketFirst ( String word, char ch )\n" +
-                " { char [] str=word++toCharArray();\n" +
-                "  if (str [ 0 ] == ch) {\n" +
-                "      return true ;\n" +
-                "a . length;\n" +
-                "}\n" +
-                "        return false;\n" +
-                "    }\n";
-        System.out.println(format(code));
+        String code = "public static void main(String [] args)\n" +
+                "   {\n" +
+                "     int num = 1234, reversed = 0;\n" +
+                "  System.out.println(\"Original Number: \" + num);\n" +
+                "    while(num != 0)\n" +
+                " {\n" +
+                "        int digit = num%10;\n" +
+                "        reversed=reversed*10+    digit ;\n" +
+                "        num /= 10;\n" +
+                "    }\n" +
+                "    System.out.println(\"Reversed Number: \" + reversed);}";
+        String code1 = format(code);
+        System.out.println(code1);
 
     }
 }
