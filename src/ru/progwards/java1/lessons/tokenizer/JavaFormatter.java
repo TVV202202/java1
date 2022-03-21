@@ -89,8 +89,8 @@ public class JavaFormatter {
             switch (chArr[j]) {
                 case '(' -> {
                     str = str.replace(chArr[j] + " ", String.valueOf(chArr[j])); // всегда убираем пробел после (
-                    str = str.replace(String.valueOf(chArr[j]), " " + chArr[j]); // добавляем пробел спереди для операторов
-                    str = str.replace("  ", " "); // убираем двойные пробелы
+                    //str = str.replace(String.valueOf(chArr[j]), " " + chArr[j]); // добавляем пробел спереди для операторов
+                    //str = str.replace("  ", " "); // убираем двойные пробелы
                     if (!operator) { // если метод, то убираем пробелы спереди
                         str = str.replace(" " + chArr[j], String.valueOf(chArr[j]));
                     }
@@ -152,18 +152,27 @@ public class JavaFormatter {
                             }
                             case '=' -> {
                                 String tmp = chArr[j] + String.valueOf(chArr[j + 1]);
-                                str = str.replace(tmp, " " + tmp + " ");
+                                str = str.replace(" " + tmp + " ", tmp); // убираем лишние пробелы
+                                str = str.replace(" " + tmp, tmp);
+                                str = str.replace(tmp + " ", tmp);
+                                str = str.replace(tmp, " " + tmp + " "); // ставим нужные пробелы
                                 j++;
                             }
-                            default -> str = str.replace(String.valueOf(chArr[j]), " " + chArr[j] + " ");
+                            default -> {
+                                str = str.replace(" " + chArr[j] + " ", String.valueOf(chArr[j]));
+                                str = str.replace(" " + chArr[j], String.valueOf(chArr[j]));
+                                str = str.replace(chArr[j] + " ", String.valueOf(chArr[j]));
+                                str = str.replace(String.valueOf(chArr[j]), " " + chArr[j] + " ");
+                            }
                         }
-                        str = str.replace("  ", " ");
+                        //str = str.replace("  ", " ");
                     }
                 }
                 case ',' -> {
-                    str = str.replace(" ,", ", ");
+                    str = str.replace(" , ", ",");
+                    str = str.replace(" ,", ",");
+                    str = str.replace(", ", ",");
                     str = str.replace(",", ", ");
-                    str = str.replace("  ", " ");
                 }
                 default -> {
                 }
