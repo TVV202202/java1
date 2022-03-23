@@ -55,6 +55,8 @@ public class JavaFormatter {
                 }
                 strings[i] = tab(countBrace) + str;
                 countBrace = countBrace - countBraceInStr;
+            } else if (str.equals("")) {
+                strings[i] = str;
             } else {
                 strings[i] = tab(countBrace) + str;
             }
